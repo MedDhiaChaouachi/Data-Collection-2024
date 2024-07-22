@@ -95,7 +95,7 @@ const CreateBlog = () => {
         <div className="w-full bg-slate-800  rounded shadow dark:border md:mt-0 sm:max-w-xl xl:p-0 ">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1 className="text-xl font-bold leading-tight tracking-tight  md:text-2xl">
-              Create a blog
+              Create a post
             </h1>
             <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
               <div>
@@ -112,7 +112,7 @@ const CreateBlog = () => {
                   id="title"
                   value={blog.title}
                   onChange={handleChange}
-                  placeholder="Title of your blog"
+                  placeholder="Title of your post"
                   required
                 />
               </div>
@@ -182,7 +182,7 @@ const CreateBlog = () => {
                 type="submit"
                 className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-500 font-medium rounded text-sm px-5 py-2.5 text-center dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-800"
               >
-                Create Blog
+                Create Post
               </button>
             </form>
           </div>

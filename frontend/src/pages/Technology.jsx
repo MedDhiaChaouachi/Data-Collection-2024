@@ -34,7 +34,7 @@ const Technology = () => {
           <img src={notfound} alt="" />
           <div>
             <p className="text-4xl font-semibold text-center ">
-              No blog entries found in{" "}
+              No post entries found in{" "}
               <span className="text-primary">Technology</span> category!
             </p>
           </div>

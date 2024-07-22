@@ -50,29 +50,31 @@ class CommentCreateSerializer(ModelSerializer):
         ]
 
 
-class ProfileSerializer(ModelSerializer):
-    password = serializers.CharField(write_only=True)
+
+
+class ProfileSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True, required=False, allow_blank=True)
 
     class Meta:
         model = Profile
-        fields = [
-            'id',
-            'username',
-            'photo',
-            'email',
-            'password',
-            'bio'
-        ]
+        fields = ['id', 'username', 'photo', 'email', 'password', 'bio', 'role']
 
     def create(self, validated_data):
-        user = User.objects.create_user(
-            validated_data['username'],
-            validated_data['email'],
-            validated_data['password'],
-        )
-        profile = Profile.objects.create(
-            user=user,
-            photo=validated_data['photo'],
-            bio=validated_data['bio'],
-        )
+        user_data = {
+            'username': validated_data.pop('username'),
+            'email': validated_data.pop('email'),
+            'password': validated_data.pop('password')
+        }
+        user = User.objects.create_user(**user_data)
+        profile_data = validated_data
+        profile_data['user'] = user
+        profile = Profile.objects.create(**profile_data)
         return profile
+
+    def update(self, instance, validated_data):
+        password = validated_data.pop('password', None)
+        instance = super().update(instance, validated_data)
+        if password:
+            instance.user.set_password(password)
+            instance.user.save()
+        return instance

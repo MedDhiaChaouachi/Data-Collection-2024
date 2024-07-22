@@ -4,9 +4,9 @@ from django.contrib.auth.models import AbstractUser
 
 
 class Profile(AbstractUser):
-    photo = models.ImageField(
-        upload_to='profile/', blank=True, null=True, default='profile/default.png')
+    photo = models.ImageField(upload_to='profile/', blank=True, null=True, default='profile/default.png')
     bio = models.TextField(blank=True, null=True)
+    role = models.CharField(max_length=50,default='Client')
 
     def __str__(self):
         return self.username
@@ -67,7 +67,9 @@ class Blog(models.Model):
 
     class Meta:
         ordering = ['-created_at']
-
+        verbose_name = "Post"
+        verbose_name_plural = "Posts"
+        
     def __str__(self):
         return self.title
 

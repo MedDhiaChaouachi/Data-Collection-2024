@@ -34,7 +34,7 @@ const Music = () => {
           <img src={notfound} alt="" />
           <div>
             <p className="text-4xl font-semibold text-center ">
-              No blog entries found in{" "}
+              No post entries found in{" "}
               <span className="text-primary">Music</span> category!
             </p>
           </div>

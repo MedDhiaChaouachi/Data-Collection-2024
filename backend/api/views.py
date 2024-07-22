@@ -7,7 +7,10 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.permissions import IsAuthenticated
 from django.http import JsonResponse
+from django.shortcuts import render
 
+def index(request):
+    return render(request, 'index.html')
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
@@ -16,10 +19,8 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         token['username'] = user.username
         return token
 
-
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
-
 
 @api_view(['GET'])
 def getBlogs(request):
@@ -33,13 +34,11 @@ def getBlogs(request):
         serializer = BlogSerializer(blogs, many=True)
         return Response(serializer.data)
 
-
 @api_view(['GET'])
 def getBlog(request, pk):
     blog = Blog.objects.get(pk=pk)
     blogSerializer = BlogSerializer(blog, many=False)
     return Response(blogSerializer.data)
-
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -48,7 +47,6 @@ def getMyBlogs(request):
     blogs = Blog.objects.filter(author=user)
     serializer = BlogSerializer(blogs, many=True)
     return Response(serializer.data)
-
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -61,7 +59,6 @@ def createBlog(request):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
 def updateBlog(request, pk):
@@ -73,7 +70,6 @@ def updateBlog(request, pk):
         return Response(serializer.data)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
 def deleteBlog(request, pk):
@@ -81,13 +77,11 @@ def deleteBlog(request, pk):
     blog.delete()
     return Response('Item successfully deleted!', status=status.HTTP_204_NO_CONTENT)
 
-
 @api_view(['GET'])
 def getComments(request, pk):
     comments = Comment.objects.filter(blog=pk)
     serializer = CommentSerializer(comments, many=True)
     return Response(serializer.data)
-
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -102,7 +96,6 @@ def createComment(request):
         return Response(commentSerializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
 def deleteComment(request, pk):
@@ -110,30 +103,26 @@ def deleteComment(request, pk):
     comment.delete()
     return Response('Item successfully deleted!', status=status.HTTP_204_NO_CONTENT)
 
-
 @api_view(['POST'])
 def registerUser(request):
     data = request.data
     try:
         user = Profile.objects.create_user(
             username=data['username'],
-            email=data['email'],
+            email=data.get('email', ''),
             password=data['password'],
-            photo=data['photo'],
-            bio=data['bio']
+            photo=data.get('photo', 'profile/default.png'),
+            bio=data.get('bio', ''),
+            role=data.get('role', 'Client')  # Set default role if not provided
         )
         serializer = ProfileSerializer(user, many=False)
         return Response(serializer.data)
-
     except:
         message = {'detail': 'Profile with this username already exists'}
         return Response(message, status=status.HTTP_400_BAD_REQUEST)
-
-
 @api_view(['GET'])
 def getCategory(request):
     return JsonResponse([category[1] for category in Blog.CHOICES], safe=False)
-
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -143,7 +132,6 @@ def addLike(request, pk):
     blog.save()
     serializer = BlogSerializer(blog, many=False)
     return Response(serializer.data)
-
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -161,3 +149,25 @@ def getProfile(request, pk):
     serializer = ProfileSerializer(user, many=False)
     return Response(serializer.data)
 
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def updateProfile(request, pk):
+    try:
+        profile = Profile.objects.get(pk=pk)
+    except Profile.DoesNotExist:
+        return Response({"detail": "Profile not found"}, status=404)
+
+    data = request.data
+    profile.username = data.get('username', profile.username)
+    profile.email = data.get('email', profile.email)
+    profile.bio = data.get('bio', profile.bio)
+
+    if 'photo' in data:
+        profile.photo = data['photo']
+
+    if 'password' in data and data['password']:
+        profile.set_password(data['password'])  # Directly set the password on the Profile model
+
+    profile.save()
+
+    return Response(ProfileSerializer(profile).data)

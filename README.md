@@ -1,71 +1,112 @@
-# react-django-blog-app
-A platform for writing blogs, articles etc.
-[Live](https://bloghub-react.netlify.app/)
+# DATA COLLECTION Platform
 
-## Technologies
-1. React
-2. Tailwind CSS
-3. Django 4.1.2
-3. Django REST Framework
+## Overview
 
-## UI Screenshots
-![Screenshot (74)](https://user-images.githubusercontent.com/87283264/197416494-0904c09f-631e-4d62-80d4-8fee654b3954.png)
-![Screenshot (76)](https://user-images.githubusercontent.com/87283264/197416771-42d33484-241b-47ea-b979-ff389bcd8ec4.png)
+Welcome to the DATA COLLECTION Platform! This full-stack web application is developed using Django for the backend and React for the frontend. It enables analysts to create and share posts, which users and clients can easily view and interact with. The platform also allows users to manage third-party cookies and visualize real-time data through a modern graphical extension. Additionally, the application features JWT authentication for secure user registration and login. The database used is PostgreSQL.
 
+## Features
 
+- **Analyst Posts:** Analysts can create and share insightful posts.
+- **User Interaction:** Users and clients can view and engage with posts.
+- **Third-Party Cookie Management:** Users can control third-party cookies.
+- **Real-Time Data Collection:** Collects user data in real-time, displayed via a browser extension.
+- **Modern Graphics:** Real-time data is presented with a sleek, user-friendly interface.
+- **JWT Authentication:** Secure registration and login with JSON Web Tokens (JWT).
+- **PostgreSQL Database:** Utilizes PostgreSQL for data storage.
 
-## Setting up the backend server
-1. Clone the project
-```bash
-git clone https://github.com/nz-m/react-django-blog-app.git
-```
-2. Go to the project directory (backend)
-```bash
-cd backend
-```
-3. Create a virtual environment and activate it (Windows)
-```bash
-python -m venv env
-```
-```bash
-env\Scripts\activate
-```
-4. Install dependencies
-```bash
-pip install -r requirements.txt
-```
-5. Migrate
-```bash
-python manage.py migrate
-```
-6. Create admin/superuser
-```bash
-python manage.py createsuperuser
-```
-7. Finally run the project
-```bash
-python manage.py runserver
-```
-Now the project should be running on http://127.0.0.1:8000/
+## Tech Stack
 
-## Setting up the react app
+- **Backend:** Django
+- **Frontend:** React
+- **Styling:** Tailwind CSS
+- **Authentication:** JWT
+- **Database:** PostgreSQL
 
-**.env file content for backend url**
-```
-REACT_APP_BASE_URL = http://127.0.0.1:8000
-```
-run
-```bash
-cd frontend
-npm install
-npm start
-```
+## Installation
 
-## Credits
-Developer : [Neaz Mahmud](https://github.com/nz-m)
+### Prerequisites
 
-Designer : [Rownok](https://github.com/rownokmahbub)
+- Python 3.x
+- Node.js
+- npm or yarn
+- PostgreSQL
 
-## License
-MIT license @ [Neaz Mahmud](https://github.com/nz-m/react-django-blog-app/blob/main/LICENSE)
+### Backend Setup
 
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/your-username/data-collection-platform.git
+   cd data-collection-platform
+   ```
+
+2. Set up a virtual environment and activate it:
+
+   ```bash
+   python -m venv env
+   source env/bin/activate  # On Windows use `env\Scripts\activate`
+   ```
+
+3. Install Python dependencies: i will add the requirements file as soon as possible
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. Configure the PostgreSQL database:
+
+   - Create a new database and user.
+   - Update `settings.py` with your PostgreSQL credentials:
+     ```python
+     DATABASES = {
+         'default': {
+             'ENGINE': 'django.db.backends.postgresql',
+             'NAME': 'your_db_name',
+             'USER': 'your_db_user',
+             'PASSWORD': 'your_db_password',
+             'HOST': 'localhost',
+             'PORT': '5432',
+         }
+     }
+     ```
+
+5. Apply migrations and start the server:
+   ```bash
+   python manage.py migrate
+   python manage.py runserver
+   ```
+
+### Frontend Setup
+
+1. Navigate to the `frontend` directory:
+
+   ```bash
+   cd frontend
+   ```
+
+2. Install npm dependencies:
+
+   ```bash
+   npm install  # or `yarn install`
+   ```
+
+3. Start the React development server:
+   ```bash
+   npm start  # or `yarn start`
+   ```
+
+## Usage
+
+1. Access the backend server at `http://localhost:8000`.
+2. Access the frontend server at `http://localhost:3000`.
+3. Create, view, and interact with analyst posts.
+4. Manage third-party cookies and visualize real-time data with the browser extension.
+5. Register and log in securely using JWT authentication.
+
+### Donate
+
+Support the development of this project by donating Bitcoin to the following address:
+
+**BTC Wallet Address:** 1CELHLsoEe7zbHNgbNFKafHeAy95yksT7S
+
+Thank you for your support!

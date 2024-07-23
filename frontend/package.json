@@ -2,7 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://MedDhiaChaouachi.github.io/frontendb",
+  "homepage": "https://MedDhiaChaouachi.github.io/frontend",
   "dependencies": {
     "@headlessui/react": "^1.7.3",
     "@tailwindcss/line-clamp": "^0.4.2",

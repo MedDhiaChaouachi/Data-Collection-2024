@@ -36,7 +36,7 @@ Welcome to the DATA COLLECTION Platform! This full-stack web application is deve
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/data-collection-platform.git
+   git clone https://github.com/meddhiachaouachi/data-collection-2024.git
    cd data-collection-platform
    ```
 
